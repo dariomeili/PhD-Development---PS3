@@ -9,7 +9,6 @@
 #                   and effects of Z_2 on non-rice food expenditure / rice share
 #     - Exercise 5: ITT, 2SLS, first stage F-statistic, Anderson-Rubin CI and
 #                   the Lee et al. (2022) tF-adjusted CI
-#   It is a translation to R of last year's Stata do file (ps2SolutionDoFile.do).
 #
 # How to run
 #   From the repository root:   Rscript ps3_solutions.R
@@ -31,26 +30,17 @@
 #   readr, dplyr, purrr, fixest
 #
 # Run time
-#   A few seconds. There are no simulations or bootstraps, so no seed is needed
-#   and nothing needs to be run on ScienceCloud.
+#   A few seconds.
 #
-# Notes on choices that differ from / are not pinned down by the Stata code
-#   - Standard errors: heteroskedasticity-robust. fixest's "hetero" uses HC1,
-#     like Stata's `reg, robust`. Stata's `ivreg2, robust` uses HC0 for the
-#     2SLS SE; the difference is a factor sqrt(1000/998) and invisible at the
-#     reported precision.
-#   - F-statistics: with one instrument and robust SEs, the first-stage F is the
-#     squared robust t-statistic (as `reg, robust` reports).
-#   - Anderson-Rubin CI: obtained by inverting the heteroskedasticity-robust
-#     AR test (as `weakiv` does after `ivreg2, robust`). With a single
-#     instrument the acceptance region solves a quadratic in beta_0, so the
-#     interval is computed in closed form (HC0, as in ivreg2/weakiv).
-#     This gives [0.015, 0.332]; a grid inversion with HC0, HC1, the score (LM)
-#     form or homoskedastic errors gives the same interval. Last year's
-#     solutions quoted [0.018, 0.372] from weakiv, which cannot be reproduced
-#     from this dataset (all other numbers reproduce exactly).
-#   - Lee et al. (2022) CI: the adjustment factor r(F) is linearly interpolated
-#     in Table 3, Panel A of the paper, as the problem set asks.
+# Modelling choices
+#   - Standard errors are heteroskedasticity-robust (fixest "hetero", i.e. HC1).
+#   - With one instrument and robust SEs, the first-stage F-statistic is the
+#     squared robust t-statistic of the instrument.
+#   - The Anderson-Rubin CI inverts the heteroskedasticity-robust (HC0) AR
+#     test. With a single instrument the acceptance region solves a quadratic
+#     in beta_0, so the interval is computed in closed form.
+#   - The Lee et al. (2022) adjustment factor r(F) is linearly interpolated in
+#     Table 3, Panel A of the paper, as the problem set asks.
 ################################################################################
 
 if (!require("pacman")) install.packages("pacman")
@@ -221,8 +211,7 @@ log_line(sprintf("  AR 95%% CI = [%.3f, %.3f] (width %.3f vs conventional width 
 
 ## 5.6(c) Lee et al. (2022) tF CI -------------------------------------------------
 # Adjustment factors for a 5% test from Table 3, Panel A of Lee et al. (2022),
-# for the two F values bracketing ours (same values as in last year's solutions,
-# which used Table 3a of the 2021 NBER working paper).
+# for the two F values bracketing ours.
 lee_tab <- tibble::tibble(F = c(17.810, 19.178), r = c(1.376, 1.345))
 stopifnot(F3 >= lee_tab$F[1], F3 <= lee_tab$F[2])
 w     <- (F3 - lee_tab$F[1]) / diff(lee_tab$F)
