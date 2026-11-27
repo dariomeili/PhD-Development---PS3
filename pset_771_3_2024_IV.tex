@@ -1,0 +1,257 @@
+%%% DOCUMENT CLASS (SELECT ONE)
+\documentclass[10pt]{article}
+%\documentclass[10pt,twoside,twocolumn]{article}
+
+
+%%% GENERAL STRUCTURE
+\usepackage{subfiles} % Write tex files inheriting header of main file.
+\usepackage[authoryear]{natbib}
+\usepackage{appendix}
+
+%% ABSTRACT
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+%% HEADER AND FOOTERS
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+%\fancyhead[C]{Running title $\bullet$ May 2016 $\bullet$ Vol. XXI, No. 1} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+%% SECTIONS AND SUB TITLE FORMATTING
+\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+%%% TEXT FONT AND STYLE
+\usepackage[latin9]{inputenc}
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+\usepackage{color,soul}
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+
+%%% FLOATS
+\usepackage{float} 
+\usepackage[flushleft]{threeparttable} %add table float environment with notes in the bottom.
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{subcaption} %Subfigures
+\usepackage[labelfont=bf,position=below, skip=0pt]{caption} % Custom
+\usepackage{rotfloat}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+%% SPACING FLOATS
+\setlength{\textfloatsep}{3.0pt plus 2.0pt minus 2.0pt} %difference between floats and texts
+\setlength{\floatsep} {2pt plus 2.0pt minus 2.0pt}
+\setlength{\intextsep} {4pt plus 2.0pt minus 2.0pt}
+\captionsetup{font=small,skip=1pt} %% spacing btwn caption and figure
+
+%%% PARAGRAPH, LINE SPACING, AND MARGINS FORMATING
+% Paragraphs
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+% Lines
+\usepackage{setspace}
+\linespread{1.3} % Line spacing - Palatino needs more space between lines
+
+% Document margins
+\usepackage[hmarginratio=1:1,top=15mm,columnsep=25pt,margin=1.2in]{geometry}
+
+% Lists
+\usepackage{enumitem} % Customized lists
+\setlist[enumerate]{noitemsep} % Make enumerate lists more compact
+
+%%% MATH ENVIRONMENT
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm} % math nice fontains like mathbbm
+
+%%	NEW MATH ENVIRONMENTS
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcounter{exercise} 
+\newenvironment{exercise}% environment name 
+{% begin code 
+	\refstepcounter{exercise}% 
+	\textbf{Exercise \theexercise}% 
+	}% 
+{
+ \par\vspace{\baselineskip}% 
+\noindent\ignorespacesafterend
+}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%% MISCELLANEOUS PACKAGES
+\usepackage{rotating} % allows to rotate floats and pages
+\usepackage{url} %Helps writting url addresses
+\usepackage{hyperref} % For hyperlinks in the PDF
+\newcommand{\sym}[1]{\rlap{#1}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\usepackage{titling} % Customizing the title section
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+	\posttitle{\end{center}} % Article title closing formatting
+\title{14.771 - Problem Set 2} % Article title
+\author{%
+	%\textsc{}\thanks{} \\[1ex] % Your name
+	\normalsize MIT \\ % Your institution
+	\normalsize TA's Email: \href{mailto:jbaudet@mit.edu}{jbaudet@mit.edu} % Your email address
+	%\and % Uncomment if 2 authors are required, duplicate these 4 lines if more
+	%\textsc{Jane Smith}\thanks{Corresponding author} \\[1ex] % Second author's name
+	%\normalsize University of Utah \\ % Second author's institution
+	%\normalsize \href{mailto:jane@smith.com}{jane@smith.com} % Second author's email address
+}
+\date{Due date: October 6th, 10:30am ET} % Leave empty to omit a date
+\renewcommand{\maketitlehookd}{%
+	%\begin{abstract}
+	%\noindent \blindtext % Dummy abstract text - replace \blindtext with your abstract text
+	%\end{abstract}
+}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+You would like to develop an RCT to evaluate the impact of nutrition, as measured by caloric intake, on worker's productivity.
+
+\begin{exercise}
+	Before running an experiment, you perform a literature review and try to understand if the question was already answered. Although you find no RCT on the subject, you discover that a series of papers have shown, using non-experimental variation, that caloric intake is positively associated with higher productivity and labour supply in developing countries. Cite at least three reasons (max. 3 lines each) why this association might \textit{not} be causal.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{indep}
+	You decide to run an experiment where you will incentivise participants to increase their caloric intake. This experiment will be run in small scale, affecting only a negligible share of the population in the area you are studying.
+	%
+	Your first thought is to provide individuals with a grant that can only be used to buy food. To enforce that, you randomise a subset of the participants of your experiment to receive a food stamp that allow them to purchase food at grocery stores, but not other type of good. Let $ Z^{1}_{i} $ be an indicator of whether the participant was randomised to receive a food stamp. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item What is the name given to the variable $ Z_{i} $? (1 line)
+		%
+		\item What are the four classical assumptions behind IV (Imbens and Angrist, 1994) with heterogeneous treatment effects (a.k.a., LATE)? Explain each of them in words (3 lines max. per assumption).
+		%
+		\item Assuming your randomisation works perfectly and there is no attrition in the study. Which of the four LATE assumptions are guaranteed by random assignment \textit{when there is no attrition}? (max. 3 lines)
+		%
+		\item Suppose that after running the experiment you realise that individuals in the control group were significantly more likely to refuse to participate in an endline survey where you would measure Body Mass Index and labour outcomes. When you analyse your data, you will of course need to condition on the participants who did not drop out from the study. How does this affect the assumption you pointed out on item (2) above? (max. 4 lines)
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{substitution}
+	The first test you would like to do is whether you have a First Stage. In this question, you will use the dataset $ps2\_d1.csv$ provided with the problem set. The instrument here is $ Z^1 $ (coded in the data set as $ Z\_1 $), from Exercise \ref{indep} and there are two variables you believe could measure nutrition: (i) Food expenditure ($ food\_exp $), which you can measure very precisely; and (ii) caloric intake $ cal\_int $, which you can measure with some noise. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item Write down the first stage equation in this context.
+		%
+		\item Estimate the first stage for both variables and present your results in a two-column table. Argue how we can interpret your results as evidence of a failure of the First Stage hypothesis for caloric intake, but a success for food expenditure. (max. 5 lines)
+		%
+		\item You know for a fact that your measure of food expenditure is reliable (i.e, does portray an accurate description of food consumption by the participant). Explain what type of consumption behaviour could explain how food expenditure could increase without an increase in caloric intake. (max. 5 lines)
+
+		
+	\end{enumerate}
+	
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{giffen}
+	Since you failed to find a first stage effect in your first pilot, you run a second pilot. Now, you try to increase caloric intake by randomising a second type of food stamp. Now, you restrict the goods that can be purchased by the participants to rice, which is the staple food in the region you are studying. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item Using the dataset $ps2\_d2.csv$, run the first stage with your new instrument, $ Z_{2} $. Report the equation you estimated and the results in a two-column table similar to the one in Exercise \ref{substitution}. 
+		%
+		
+		\item Rationalise your results using classic consumer (price) theory. (No need to do mathematics here, words suffice.). (tip 1: You may find it useful to check Jensen and Miller (2008) to answer this question; Tip 2: there are other variables in this dataset you might want to check)\footnote{Jensen, R.T. and Miller, N.H., 2008. Giffen behavior and subsistence consumption. American economic review, 98(4), pp.1553-77.}
+	\end{enumerate}
+	
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{2sls}
+	Let us assume now that you give financial incentives for participants to increase their caloric intake. In particular, you randomise participants into an experimental and a control condition, where the experimental group receives a small payment if they increase their caloric intake. Assume you can still measure the participants' caloric intake. Using the dataset $ps\_d3.csv$, where work productivity is measured by the variable $ prod $ and the instrument is measured by $ Z\_3 $, please answer the following questions.
+		%
+	\begin{enumerate}
+		\item What is the intent-to-treatment (ITT, sometimes called reduced form) equation you would like to estimate?
+		%
+		\item Please estimate the intent-to-treat equation and present and interpret the results.
+		%
+		\item Assuming you trust the randomisation, can you conclude that the intent-to-treat association is causal?
+		%
+		\item Estimate equation \ref{eq_struct} by Two-Stage Least Squares (2SLS), instrumenting $ cal\_int_{i} $ with $  Z\_3 $, and present your result.
+		%
+		\begin{equation}\label{eq_struct}
+			prod_{i} = \beta_{0} + \beta_{1} cal\_int_{i} + \varepsilon_{i}
+		\end{equation}
+		%
+		\item What is the relationship between $ \hat{\beta}_{1}^{2SLS} $, the 2SLS estimator of equation \ref{eq_struct}, and $ \hat{\alpha}^{ITT} $ and $ \hat{\alpha}^{FS} $, the ITT and the First Stage estimators, respectively?
+		%
+		\item You are very enthusiastic about your findings, and so you present them in Dev/PE Lunch. An audience member is concerned that your instrument may be weak. To investigate this concern, please do the following:
+		\begin{enumerate}
+			\item Run the first stage and report the $F$-statistic. What can you conclude from this?
+			\item Produce an Anderson-Rubin confidence interval. This can be implemented with \textit{weakiv} in Stata. Report the results. Is the confidence interval wider than the one you estimated above?
+			\item Produce a confidence interval using the adjustment factor in Lee et al (2022).\footnote{Lee, D.S., McCrary, J., Moreira, M.J. and Porter, J., 2022. Valid t-ratio Inference for IV. American Economic Review, 112(10), pp.3260-3290.} 
+			\item Discuss briefly whether your 2SLS estimate is robust to weak IV.
+		\end{enumerate}
+
+	\textit{Hint: Look at Table 3, Panel A of Lee et al (2022). Find the $F$-statistic from your first stage in the top row (feel free to interpolate), and then take the corresponding adjustment factor from the second row. Then, compute a confidence interval as $\hat{\beta}^{2SLS} \pm 1.96 \cdot \widehat{SE}(\hat{\beta}) \cdot r(F)$, where $r(F) \geq 1$ is the adjustment factor from the table. You might notice that the adjustment factor gets smaller as $F$ gets larger, with $r(F)=1$ for $F=104.67$.}
+	\end{enumerate}
+	%
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{ext_val}
+	You are asked to estimate the calorie-productivity intake curve. This curve plots worker's average productivity by caloric intake level. 
+	%
+	\begin{enumerate}
+		\item Argue why you cannot estimate this curve, except perhaps on two points, with the instrument from Exercise \ref{2sls}, even if you believe it to be a valid instrument (Max. 5 lines).
+		%
+		\item Can you propose a modification to your design in order to estimate this curve for more points? (tip: how could you modify the instrument to achieve this goal?)
+	\end{enumerate}
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
