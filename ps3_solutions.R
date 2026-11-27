@@ -181,7 +181,7 @@ se_iv <- unname(se(iv)["fit_cal_int"])
 ci_iv <- b_iv + c(-1, 1) * qnorm(0.975) * se_iv
 write_table(iv, "tables/tab5_iv.tex",
             title = "2SLS estimate", label = "tab:iv",
-            headers = "Productivity", keep = "cal_int", dict = dict,
+            headers = "Productivity", keep = "%cal_int", dict = dict,
             ctrl_means = mean_prod_c, Fstats = F3, F_label = "First-stage F-stat")
 log_line(sprintf("  2SLS: beta = %.3f, robust SE = %.4f, 95%% CI = [%.3f, %.3f]",
                  b_iv, se_iv, ci_iv[1], ci_iv[2]))
