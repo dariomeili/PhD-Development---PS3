@@ -45,6 +45,10 @@
 #     AR test (as `weakiv` does after `ivreg2, robust`). With a single
 #     instrument the acceptance region solves a quadratic in beta_0, so the
 #     interval is computed in closed form (HC0, as in ivreg2/weakiv).
+#     This gives [0.015, 0.332]; a grid inversion with HC0, HC1, the score (LM)
+#     form or homoskedastic errors gives the same interval. Last year's
+#     solutions quoted [0.018, 0.372] from weakiv, which cannot be reproduced
+#     from this dataset (all other numbers reproduce exactly).
 #   - Lee et al. (2022) CI: the adjustment factor r(F) is linearly interpolated
 #     in Table 3, Panel A of the paper, as the problem set asks.
 ################################################################################
@@ -80,7 +84,7 @@ write_table <- function(models, file, title, label, headers, keep, dict,
   etable(models,
          tex = TRUE, file = file, replace = TRUE,
          title = title, label = label,
-         headers = headers, keep = keep, dict = dict,
+         headers = headers, keep = keep, dict = dict, depvar = FALSE,
          digits = 3, digits.stats = 3,
          fitstat = ~ n + ar2,
          signif.code = NA,

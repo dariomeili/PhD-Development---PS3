@@ -285,7 +285,7 @@ Possible reasons for a non-causal association (i.e., explanations that do not re
 		\end{equation}
 
 		\color{red}
-		Table \ref{tab:iv} shows the 2SLS estimate. The coefficient is 0.235 (SE 0.0661) and highly significant: for compliers, one additional unit of caloric intake raises productivity by 0.235 units. The conventional 95\% confidence interval is $[0.106, 0.365]$.
+		Table \ref{tab:iv} shows the 2SLS estimate. The coefficient is 0.235 (SE 0.0662) and highly significant: for compliers, one additional unit of caloric intake raises productivity by 0.235 units. The conventional 95\% confidence interval is $[0.106, 0.365]$.
 
 		\input{tables/tab5_iv}
 		\color{black}
@@ -301,7 +301,7 @@ Possible reasons for a non-causal association (i.e., explanations that do not re
 		\begin{align*}
 		 \hat{\beta}_1^{2SLS} = \dfrac{\hat{\alpha}^{ITT}}{\hat{\alpha}^{FS}} \equiv \hat{\beta}^{Wald},
 		\end{align*}
-		i.e., the 2SLS estimate is the ITT divided by the first stage. In our data, $24.94/106.1 = 0.235$ (the first stage is in Table \ref{tab:fs_z3}).
+		i.e., the 2SLS estimate is the ITT divided by the first stage. In our data, $24.94/106.05 = 0.235$ (the first stage is in Table \ref{tab:fs_z3}).
 		\color{black}
 		%
 		\item You are very enthusiastic about your findings, and so you present them in a development seminar. An audience member is concerned that your instrument may be weak. To investigate this concern, please do the following:
@@ -315,13 +315,13 @@ Possible reasons for a non-causal association (i.e., explanations that do not re
 		\textit{Hint: Look at Table 3, Panel A of \citet{lee2022}. Find the $F$-statistic from your first stage in the top row (feel free to interpolate), and then take the corresponding adjustment factor from the second row. Then, compute a confidence interval as $\hat{\beta}^{2SLS} \pm 1.96 \cdot \widehat{SE}(\hat{\beta}) \cdot r(F)$, where $r(F) \geq 1$ is the adjustment factor from the table. You might notice that the adjustment factor gets smaller as $F$ gets larger, with $r(F)=1$ for $F=104.67$.}
 
 		\color{red}
-		(a) The first stage is shown in Table \ref{tab:fs_z3}: the incentive raises caloric intake by 106.1 (SE 24.75), and the robust $F$-statistic is 18.37. This strongly rejects the null of no first stage and is above the rule-of-thumb threshold of 10, but far below the value of 104.67 above which \citet{lee2022} show that the conventional $t$-test needs no adjustment. So we cannot dismiss weak-IV concerns without further investigation.
+		(a) The first stage is shown in Table \ref{tab:fs_z3}: the incentive raises caloric intake by 106.05 (SE 24.75), and the robust $F$-statistic is 18.37. This strongly rejects the null of no first stage and is above the rule-of-thumb threshold of 10, but far below the value of 104.67 above which \citet{lee2022} show that the conventional $t$-test needs no adjustment. So we cannot dismiss weak-IV concerns without further investigation.
 
-		(b) Inverting the heteroskedasticity-robust Anderson-Rubin test gives a 95\% confidence interval of $[0.018, 0.372]$. It is much wider than the conventional interval $[0.106, 0.365]$, and asymmetric around the point estimate, with most of the extra width at the lower end. We still reject $\beta_1 = 0$ at the 5\% level, but with a $p$-value much closer to 0.05 than the conventional standard errors suggest (with a single instrument, the AR test of $\beta_1 = 0$ is the test of the ITT, whose $t$-statistic is about 2).
+		(b) Inverting the heteroskedasticity-robust Anderson-Rubin test gives a 95\% confidence interval of $[0.015, 0.332]$. It is wider than the conventional interval $[0.106, 0.365]$ (width 0.316 vs 0.259), but not at both ends: unlike the conventional interval, the AR interval need not be symmetric around the 2SLS estimate, and here it is shifted down. It reaches much closer to zero at the lower end, while its upper bound is below the conventional one. We still reject $\beta_1 = 0$ at the 5\% level, but only just: with a single instrument, the AR test of $\beta_1 = 0$ is the test of the ITT, with $p = 0.042$, compared with a conventional $p$-value of 0.0004.
 
-		(c) For the \citet{lee2022} interval we use Table 3, Panel A of their paper (Table 3a in the working paper version, \citealp{lee2021wp}), which lists the adjustment factor for each value of the first-stage $F$-statistic. Our $F$-statistic of 18.37 lies 41\% of the way between 17.81 and 19.178, whose adjustment factors are 1.376 and 1.345, so we use $r(F) = 1.376 + 0.41 \cdot (1.345 - 1.376) = 1.363$. The confidence interval is then $0.235 \pm 1.96 \cdot 0.0661 \cdot 1.363 = [0.059, 0.412]$. It is (by construction) wider than the conventional interval and still clearly excludes zero: the $t$-statistic of 3.56 is well above the adjusted critical value of $1.96 \cdot 1.363 = 2.67$. Its overall width is similar to that of the AR interval, but it is centred on the 2SLS estimate, so its lower bound is further from zero.
+		(c) For the \citet{lee2022} interval we use Table 3, Panel A of their paper (Table 3a in the working paper version, \citealp{lee2021wp}), which lists the adjustment factor for each value of the first-stage $F$-statistic. Our $F$-statistic of 18.37 lies 41\% of the way between 17.81 and 19.178, whose adjustment factors are 1.376 and 1.345, so we use $r(F) = 1.376 + 0.41 \cdot (1.345 - 1.376) = 1.363$. The confidence interval is then $0.235 \pm 1.96 \cdot 0.0662 \cdot 1.363 = [0.058, 0.412]$. It is (by construction) wider than the conventional interval and still clearly excludes zero: the $t$-statistic of 3.55 is well above the adjusted critical value of $1.96 \cdot 1.363 = 2.67$. It is somewhat wider than the AR interval (0.354 vs 0.316) and, because it is centred on the 2SLS estimate, it lies higher: its lower bound is further from zero and its upper bound well above that of the AR interval.
 
-		(d) On the whole, the 2SLS estimate seems broadly robust to weak instruments. Inference is less precise than the conventional standard errors suggest, but we still reject the null of no effect at the 5\% level with both weak-IV robust procedures. A useful thought exercise: had we used these confidence intervals from the beginning, would we have drawn the same qualitative conclusions from the study? In this case, we probably would have.
+		(d) On the whole, the 2SLS estimate seems broadly robust to weak instruments. Inference is less precise than the conventional standard errors suggest, and the AR interval does not support the largest effects in the conventional interval, but we still reject the null of no effect at the 5\% level with both weak-IV robust procedures. A useful thought exercise: had we used these confidence intervals from the beginning, would we have drawn the same qualitative conclusions from the study? In this case, we probably would have.
 
 		\input{tables/tab6_fs_z3}
 		\color{black}
