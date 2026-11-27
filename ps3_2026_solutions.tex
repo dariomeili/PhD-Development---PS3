@@ -1,0 +1,358 @@
+%%% DOCUMENT CLASS (SELECT ONE)
+\documentclass[10pt]{article}
+%\documentclass[10pt,twoside,twocolumn]{article}
+
+
+%%% GENERAL STRUCTURE
+\usepackage{subfiles} % Write tex files inheriting header of main file.
+\usepackage[authoryear]{natbib}
+\usepackage{appendix}
+
+%% ABSTRACT
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+%% HEADER AND FOOTERS
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+%\fancyhead[C]{Running title $\bullet$ May 2016 $\bullet$ Vol. XXI, No. 1} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+%% SECTIONS AND SUB TITLE FORMATTING
+\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+%%% TEXT FONT AND STYLE
+\usepackage[latin9]{inputenc}
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+\usepackage{color,soul}
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+
+%%% FLOATS
+\usepackage{float} 
+\usepackage[flushleft]{threeparttable} %add table float environment with notes in the bottom.
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{subcaption} %Subfigures
+\usepackage[labelfont=bf,position=below, skip=0pt]{caption} % Custom
+\usepackage{rotfloat}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+%% SPACING FLOATS
+\setlength{\textfloatsep}{3.0pt plus 2.0pt minus 2.0pt} %difference between floats and texts
+\setlength{\floatsep} {2pt plus 2.0pt minus 2.0pt}
+\setlength{\intextsep} {4pt plus 2.0pt minus 2.0pt}
+\captionsetup{font=small,skip=1pt} %% spacing btwn caption and figure
+
+%%% PARAGRAPH, LINE SPACING, AND MARGINS FORMATING
+% Paragraphs
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+% Lines
+\usepackage{setspace}
+\linespread{1.3} % Line spacing - Palatino needs more space between lines
+
+% Document margins
+\usepackage[hmarginratio=1:1,top=15mm,columnsep=25pt,margin=1.2in]{geometry}
+
+% Lists
+\usepackage{enumitem} % Customized lists
+\setlist[enumerate]{noitemsep} % Make enumerate lists more compact
+
+%%% MATH ENVIRONMENT
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm} % math nice fontains like mathbbm
+
+%%	NEW MATH ENVIRONMENTS
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcounter{exercise} 
+\newenvironment{exercise}% environment name 
+{% begin code 
+	\refstepcounter{exercise}% 
+	\textbf{Exercise \theexercise}% 
+	}% 
+{
+ \par\vspace{\baselineskip}% 
+\noindent\ignorespacesafterend
+}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%% MISCELLANEOUS PACKAGES
+\usepackage{rotating} % allows to rotate floats and pages
+\usepackage{url} %Helps writting url addresses
+\usepackage{hyperref} % For hyperlinks in the PDF
+\newcommand{\sym}[1]{\rlap{#1}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\usepackage{titling} % Customizing the title section
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\pretitle{\begin{center}\LARGE\bfseries} % Article title formatting
+	\posttitle{\end{center}} % Article title closing formatting
+\title{PhD Course: Development Economics II - Problem Set 3 -- SOLUTIONS} % Article title
+\author{%
+	\normalsize TA's email: \href{mailto:dario.meili@econ.uzh.ch}{dario.meili@econ.uzh.ch}
+}
+\date{} % Leave empty to omit a date
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+You would like to develop an RCT to evaluate the impact of nutrition, as measured by caloric intake, on worker's productivity.
+
+\color{red}
+The R code that produces all tables and numbers in these solutions is in \texttt{ps3\_solutions.R}; every number quoted below is also written to \texttt{solution\_results.txt}. All standard errors are heteroskedasticity-robust (EHW).
+\color{black}
+
+\begin{exercise}
+	Before running an experiment, you perform a literature review and try to understand if the question was already answered. Although you find no RCT on the subject, you discover that a series of papers have shown, using non-experimental variation, that caloric intake is positively associated with higher productivity and labour supply in developing countries. Cite at least three reasons (max. 3 lines each) why this association might \textit{not} be causal.
+\end{exercise}
+
+\color{red}
+Possible reasons for a non-causal association (i.e., explanations that do not rely on caloric intake causing higher productivity):
+\begin{itemize}
+	\item Reverse causality: higher productivity $\rightarrow$ higher income $\rightarrow$ better nutrition.
+	\item Unobserved heterogeneity across workers (omitted variables): other traits such as education, ex-ante wealth, health or cultural differences may predict both productivity and nutrition.
+	\item Common shocks: temporary shocks that affect workers differentially can move both variables, e.g., a rainfall shock that lowers both agricultural productivity and food consumption.
+	\item Measurement error: caloric intake is very hard to measure, so imprecise estimates or proxies are common. Classical measurement error biases the estimate towards zero, and non-classical error (e.g., more productive workers reporting consumption differently) can bias it in either direction.
+\end{itemize}
+\color{black}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{indep}
+	You decide to run an experiment where you will incentivise participants to increase their caloric intake. This experiment will be run in small scale, affecting only a negligible share of the population in the area you are studying.
+	%
+	Your first thought is to provide individuals with a grant that can only be used to buy food. To enforce that, you randomise a subset of the participants of your experiment to receive a food stamp that allows them to purchase food at grocery stores, but not other types of goods. Let $ Z^{1}_{i} $ be an indicator of whether the participant was randomised to receive a food stamp. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item What is the name given to the variable $ Z^{1}_{i} $? (1 line)
+
+		\color{red}
+		An instrumental variable (instrument).
+		\color{black}
+		%
+		\item What are the four classical assumptions behind IV \citep{imbens1994} with heterogeneous treatment effects (a.k.a., LATE)? Explain each of them in words (3 lines max. per assumption).
+
+		\color{red}
+		\begin{enumerate}
+			\item Independence: $ \left(Y_i(d,z), D_i(z)\right) \perp Z_i $ for all $ d, z $. The instrument is ``as good as randomly assigned''.
+			%
+			\item First stage: $\mathbb{E} \left[ D_i(1) - D_i(0) \right] \neq 0 $, i.e., the instrument shifts take-up of the treatment. This is necessary for identification.
+			%
+			\item Exclusion restriction: $ Y_i(d,1) = Y_i(d,0) $ for all $d$, i.e., the instrument affects the outcome only through its effect on $ D_i $. This is about mechanisms: the only channel at work is the one we are interested in, the effect of $ D $ on $ Y $.
+			%
+			\item Monotonicity: either $ D_i(1) \geq D_i(0) $ for every $ i $, or $ D_i(1) \leq D_i(0) $ for every $ i $ (no defiers). If it fails, the treatment effects of the defiers enter the IV estimand with a negative weight, and the estimate can no longer be interpreted as an average causal effect for a well-defined subpopulation.
+		\end{enumerate}
+		\color{black}
+		%
+		\item Assuming your randomisation works perfectly and there is no attrition in the study. Which of the four LATE assumptions are guaranteed by random assignment \textit{when there is no attrition}? (max. 3 lines)
+
+		\color{red}
+		Randomisation guarantees independence only. The first stage can be tested in the data, while the exclusion restriction and monotonicity have to be argued for.
+		\color{black}
+		%
+		\item Suppose that after running the experiment you realise that individuals in the control group were significantly more likely to refuse to participate in an endline survey where you would measure Body Mass Index and labour outcomes. When you analyse your data, you will of course need to condition on the participants who did not drop out from the study. How does this affect the assumption you pointed out in item 3 above? (max. 4 lines)
+
+		\color{red}
+		Differential attrition threatens the independence assumption. Once we condition on being observed and selection differs across arms, treatment and control differ in two ways: (i) treatment assignment, and (ii) the characteristics that lead people to stay in the study. The comparison between the two groups may then reflect differential selection rather than treatment effects; in other words, potential outcomes of the observed sample can be correlated with the instrument.
+		\color{black}
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{substitution}
+	The first test you would like to do is whether you have a first stage. Please download the dataset, \textit{ps3\_d1.csv}, which you will use in this exercise. The instrument here is $ Z^1 $ (coded in the dataset as $ Z\_1 $) from Exercise \ref{indep}, and there are two variables you believe could measure nutrition: (i) food expenditure ($ food\_exp $), which you can measure very precisely; and (ii) caloric intake ($ cal\_int $), which you can measure with some noise. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item Write down the first stage equation in this context.
+
+		\color{red}
+		\begin{align*}
+		X_i = \beta_{0} + \beta_{1}Z^1_i + \varepsilon_{i}
+		\end{align*}
+		where $ X_i $ is either food expenditure or caloric intake of individual $ i $.
+		\color{black}
+		%
+		\item Estimate the first stage for both variables and present your results in a two-column table. Argue how we can interpret your results as evidence of a failure of the first stage for caloric intake, but a success for food expenditure. (max. 5 lines)
+
+		\color{red}
+		Table \ref{tab:fs_z1} shows the results. The food stamp raises food expenditure by 48.55 (SE 1.565), from a control mean of 107.65, with an $F$-statistic of about 962: the first stage clearly holds for food expenditure. Caloric intake, on the other hand, does \textbf{not} respond to the instrument: the coefficient is $-2.64$ (SE 8.99) with an $F$-statistic of 0.09. Hence $ Z^1 $ is a strong instrument for food expenditure but has no first stage for caloric intake.
+
+		\input{tables/tab1_fs_z1}
+		\color{black}
+		%
+		\item You know for a fact that your measure of food expenditure is reliable (i.e., it gives an accurate description of food consumption by the participant). Explain what type of consumption behaviour could explain how food expenditure could increase without an increase in caloric intake. (max. 5 lines)
+
+		\color{red}
+		Households substitute towards more expensive calories as their resources increase: they buy higher-quality, tastier or more varied food (e.g., meat, vegetables, processed food) instead of more of the cheap staples. Expenditure per calorie rises, so food expenditure goes up while the number of calories consumed stays roughly the same. This is a common empirical finding in developing countries.
+		\color{black}
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{giffen}
+	Since you failed to find a first stage effect in your first pilot, you run a second pilot. Now, you try to increase caloric intake by randomising a second type of food stamp. This time, you restrict the goods that can be purchased by the participants to rice, which is the staple food in the region you are studying. Answer the following questions:
+	%
+	\begin{enumerate}
+		\item Please download the dataset, \textit{ps3\_d2.csv}, and run the first stage with your new instrument, $ Z_{2} $ (coded as $ Z\_2 $). Report the equation you estimated and the results in a two-column table similar to the one in Exercise \ref{substitution}.
+
+		\color{red}
+		We estimate
+		\begin{align*}
+		X_i = \beta_{0} + \beta_{1}Z^2_i + \varepsilon_{i}
+		\end{align*}
+		where $ X_i $ is either rice expenditure or caloric intake. Table \ref{tab:fs_z2} shows that the instrument has a strong effect on rice expenditure, but in the opposite direction from what we hoped: rice expenditure falls by 9.85 (SE 0.440) from a control mean of 42.86 ($F \approx 501$). Caloric intake does not increase either; the point estimate is $-13.2$ (SE 16.1, $F = 0.67$), i.e., negative and statistically indistinguishable from zero. So there is again no first stage for caloric intake. Moreover, as we discuss next, if these results are driven by substantial income effects, we should worry that the exclusion restriction would not hold for this instrument either.
+
+		\input{tables/tab2_fs_z2}
+		\color{black}
+		%
+		\item Rationalise your results using classic consumer (price) theory. (No need to do mathematics here, words suffice.) (Tip 1: You may find it useful to check \citet{jensen2008} to answer this question; Tip 2: there are other variables in this dataset you might want to check.)
+
+		\color{red}
+		A rice-only food stamp acts like a subsidy, i.e., a fall in the (effective) price of rice. A price change has two effects on demand. First, the substitution effect: consumers substitute towards goods that became relatively cheaper, so it always pushes rice consumption up. Second, the income effect: the price fall makes the consumer effectively richer. If rice is a normal good, this further raises rice consumption; if it is an inferior good, it lowers it. Hence when the price of a normal good falls, consumption always rises, while for an inferior good consumption can in principle fall, if the income effect dominates the substitution effect. Goods whose demand falls when their price falls are called \textbf{Giffen goods}. This is rare, because substitution effects are usually much larger than the income effects of a price change, and the evidence for Giffen behaviour is confined to staple foods (bread, rice, potatoes) consumed by poor households who spend a large share of their budget on them \citep{jensen2008}. These households rely on the staple as the cheapest source of calories; once the subsidy relaxes their budget, they use it to buy more expensive, preferred foods instead.
+
+		Table \ref{tab:exp_z2} is consistent with this explanation: the instrument raises non-rice food expenditure by 60.19 (SE 0.331), roughly doubling it relative to the control mean of 62.52, and lowers the share of rice in food expenditure by 0.195 (SE 0.002) from a control mean of 0.41, i.e., by about half. This is a large shift in the consumption bundle away from the staple, which is why caloric intake does not rise.
+
+		\input{tables/tab3_exp_z2}
+		\color{black}
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{2sls}
+	Let us assume now that you give financial incentives for participants to increase their caloric intake. In particular, you randomise participants into an experimental and a control condition, where the experimental group receives a small payment if they increase their caloric intake. Assume you can still measure the participants' caloric intake. Please download the dataset, \textit{ps3\_d3.csv}, where work productivity is measured by the variable $ prod $ and the instrument is $ Z\_3 $, and answer the following questions.
+	%
+	\begin{enumerate}
+		\item What is the intent-to-treat (ITT, sometimes called reduced form) equation you would like to estimate?
+
+		\color{red}
+		\begin{align}\label{itt3}
+		prod_{i} = \gamma^{ITT} + \alpha^{ITT} Z^{3}_i + \varepsilon_{i}
+		\end{align}
+		i.e., we regress the outcome on the instrument.
+		\color{black}
+		%
+		\item Please estimate the intent-to-treat equation and present and interpret the results.
+
+		\color{red}
+		Table \ref{tab:itt} shows the ITT estimate. Being assigned to the incentive group increases productivity by 24.94 units (SE 12.27), about 4\% of the control mean of 614.39. The $t$-statistic is about 2.03, so the effect is just significant at the 5\% level. This is the causal effect of being \textit{offered} the incentive, not of consuming more calories.
+
+		\input{tables/tab4_itt}
+		\color{black}
+		%
+		\item Assuming you trust the randomisation, can you conclude that the intent-to-treat association is causal?
+
+		\color{red}
+		Yes. The ITT compares groups defined by random assignment, so we do not need to worry about compliance: independence of potential outcomes and the instrument is all we need (together with no differential attrition, see Exercise \ref{indep}). Note that it identifies the causal effect of the instrument (the offer), not of caloric intake.
+		\color{black}
+		%
+		\item Estimate equation \ref{eq_struct} by Two-Stage Least Squares (2SLS), instrumenting $ cal\_int_{i} $ with $ Z\_3 $, and present your result.
+		%
+		\begin{equation}\label{eq_struct}
+			prod_{i} = \beta_{0} + \beta_{1} cal\_int_{i} + \varepsilon_{i}
+		\end{equation}
+
+		\color{red}
+		Table \ref{tab:iv} shows the 2SLS estimate. The coefficient is 0.235 (SE 0.0662) and highly significant: for compliers, one additional unit of caloric intake raises productivity by 0.235 units. The conventional 95\% confidence interval is $[0.106, 0.365]$.
+
+		\input{tables/tab5_iv}
+		\color{black}
+		%
+		\item What is the relationship between $ \hat{\beta}_{1}^{2SLS} $, the 2SLS estimator of equation \ref{eq_struct}, and $ \hat{\alpha}^{ITT} $ and $ \hat{\alpha}^{FS} $, the ITT and the first stage estimators, respectively?
+
+		\color{red}
+		The first stage equation is
+		\begin{align}\label{fs3}
+		cal\_int_{i} = \gamma^{FS} + \alpha^{FS} Z^{3}_i + \nu_{i}
+		\end{align}
+		and the ITT regression is equation \ref{itt3}. With a single binary instrument (and no covariates), the 2SLS estimator coincides with the Wald estimator:
+		\begin{align*}
+		 \hat{\beta}_1^{2SLS} = \dfrac{\hat{\alpha}^{ITT}}{\hat{\alpha}^{FS}} \equiv \hat{\beta}^{Wald},
+		\end{align*}
+		i.e., the 2SLS estimate is the ITT divided by the first stage. In our data, $24.94/106.05 = 0.235$ (the first stage is in Table \ref{tab:fs_z3}).
+		\color{black}
+		%
+		\item You are very enthusiastic about your findings, and so you present them in a development seminar. An audience member is concerned that your instrument may be weak. To investigate this concern, please do the following:
+		\begin{enumerate}
+			\item Run the first stage and report the $F$-statistic. What can you conclude from this?
+			\item Produce an Anderson-Rubin confidence interval \citep{anderson1949}. This can be implemented with \textit{weakiv} in Stata; using R or Python (e.g., inverting the test by hand over a grid of values $\beta_0$, regressing $prod_i - \beta_0\, cal\_int_i$ on $Z\_3$) is fine too. Report the results. Is the confidence interval wider than the one you estimated above?
+			\item Produce a confidence interval using the adjustment factor in \citet{lee2022}.
+			\item Discuss briefly whether your 2SLS estimate is robust to weak IV.
+		\end{enumerate}
+
+		\textit{Hint: Look at Table 3, Panel A of \citet{lee2022}. Find the $F$-statistic from your first stage in the top row (feel free to interpolate), and then take the corresponding adjustment factor from the second row. Then, compute a confidence interval as $\hat{\beta}^{2SLS} \pm 1.96 \cdot \widehat{SE}(\hat{\beta}) \cdot r(F)$, where $r(F) \geq 1$ is the adjustment factor from the table. You might notice that the adjustment factor gets smaller as $F$ gets larger, with $r(F)=1$ for $F=104.67$.}
+
+		\color{red}
+		(a) The first stage is shown in Table \ref{tab:fs_z3}: the incentive raises caloric intake by 106.05 (SE 24.75), and the robust $F$-statistic is 18.37. This strongly rejects the null of no first stage and is above the rule-of-thumb threshold of 10, but far below the value of 104.67 above which \citet{lee2022} show that the conventional $t$-test needs no adjustment. So we cannot dismiss weak-IV concerns without further investigation.
+
+		(b) Inverting the heteroskedasticity-robust Anderson-Rubin test gives a 95\% confidence interval of $[0.015, 0.332]$. It is wider than the conventional interval $[0.106, 0.365]$ (width 0.316 vs 0.259), but not at both ends: unlike the conventional interval, the AR interval need not be symmetric around the 2SLS estimate, and here it is shifted down. It reaches much closer to zero at the lower end, while its upper bound is below the conventional one. We still reject $\beta_1 = 0$ at the 5\% level, but only just: with a single instrument, the AR test of $\beta_1 = 0$ is the test of the ITT, with $p = 0.042$, compared with a conventional $p$-value of 0.0004.
+
+		(c) For the \citet{lee2022} interval we use Table 3, Panel A of their paper (Table 3a in the working paper version, \citealp{lee2021wp}), which lists the adjustment factor for each value of the first-stage $F$-statistic. Our $F$-statistic of 18.37 lies 41\% of the way between 17.81 and 19.178, whose adjustment factors are 1.376 and 1.345, so we use $r(F) = 1.376 + 0.41 \cdot (1.345 - 1.376) = 1.363$. The confidence interval is then $0.235 \pm 1.96 \cdot 0.0662 \cdot 1.363 = [0.058, 0.412]$. It is (by construction) wider than the conventional interval and still clearly excludes zero: the $t$-statistic of 3.55 is well above the adjusted critical value of $1.96 \cdot 1.363 = 2.67$. It is somewhat wider than the AR interval (0.354 vs 0.316) and, because it is centred on the 2SLS estimate, it lies higher: its lower bound is further from zero and its upper bound well above that of the AR interval.
+
+		(d) On the whole, the 2SLS estimate seems broadly robust to weak instruments. Inference is less precise than the conventional standard errors suggest, and the AR interval does not support the largest effects in the conventional interval, but we still reject the null of no effect at the 5\% level with both weak-IV robust procedures. A useful thought exercise: had we used these confidence intervals from the beginning, would we have drawn the same qualitative conclusions from the study? In this case, we probably would have.
+
+		\input{tables/tab6_fs_z3}
+		\color{black}
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}\label{ext_val}
+	You are asked to estimate the calorie-productivity curve. This curve plots workers' average productivity by caloric intake level.
+	%
+	\begin{enumerate}
+		\item Argue why you cannot estimate this curve, except perhaps at two points, with the instrument from Exercise \ref{2sls}, even if you believe it to be a valid instrument. (max. 5 lines)
+
+		\color{red}
+		With a single binary instrument, 2SLS only identifies one number: a weighted average of the marginal effects of caloric intake on productivity for the compliers over the range of intake the instrument moves them across. Under additional assumptions, we can plot mean productivity against mean caloric intake in the two groups; the slope of the line connecting the two points is the 2SLS estimate. But a different instrument, with different compliers, could give a different slope even with the same control mean, so the two points do not trace out the curve.
+		\color{black}
+		%
+		\item Can you propose a modification to your design in order to estimate this curve for more points? (Tip: how could you modify the instrument to achieve this goal?)
+
+		\color{red}
+		The main problem is that the instrument is binary, so it only moves caloric intake between two points. With more instrument values we can start to trace out the curve. For instance, with a control group, a low-incentive group and a high-incentive group, and a difference in the first stage between the low- and the high-incentive arms, we can estimate three points of the curve (and the slopes between them).
+
+		Another approach would be to run the experiment in settings with different baseline levels of caloric intake. It is not obvious how to do that, and even then we would have to argue that whatever causes the different baselines does \textit{not} shift the curve (i.e., that we move along the same curve rather than compare different curves).
+		\color{black}
+	\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{plainnat}
+\bibliography{ps3}
+
+\end{document}

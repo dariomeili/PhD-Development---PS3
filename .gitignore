@@ -3,3 +3,11 @@
 .RData
 .Ruserdata
 PS3.Rproj
+
+# LaTeX build files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
